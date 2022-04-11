@@ -1,0 +1,3 @@
+[submodule "waistband"]
+	path = waistband
+	url = git@github.com:josehu07/waistband

@@ -30,6 +30,8 @@ from official.legacy.image_classification.resnet import common
 from official.utils.flags import core as flags_core
 from official.utils.misc import model_helpers
 
+from profile_wrappers import *
+
 FLAGS = flags.FLAGS
 
 
@@ -91,6 +93,8 @@ def run(flags_obj, datasets_override=None, strategy_override=None):
 
   strategy_scope = distribute_utils.get_strategy_scope(strategy)
 
+  profile_wrappers_on()
+
   mnist = tfds.builder('mnist', data_dir=flags_obj.data_dir)
   if flags_obj.download:
     mnist.download_and_prepare()
@@ -102,6 +106,8 @@ def run(flags_obj, datasets_override=None, strategy_override=None):
   train_input_dataset = mnist_train.cache().repeat().shuffle(
       buffer_size=50000).batch(flags_obj.batch_size)
   eval_input_dataset = mnist_test.cache().repeat().batch(flags_obj.batch_size)
+
+  profile_wrappers_off()
 
   with strategy_scope:
     lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
