@@ -1,6 +1,57 @@
 # For Waistband Profiling:
 
-TODO
+Take MNIST model at `official/legacy/image_classification/mnist_main.py` for example. Create a symbolic link of the file under submodule
+`waistband/profile/profile_wrappers.py` to the same folder alongside the model's main script:
+
+```python
+cd official/legacy/image_classification/
+ln -s ../../../waistband/profile/profile_wrappers.py profile_wrappers.py
+```
+
+To enable dataset size profiling, add the following import after all other imports:
+
+```python
+// mnist_main.py
+from profile_wrappers import *
+```
+
+Then, wrap around the dataset loading code snippet with the following two functions:
+
+```python
+// mnist_main.py
+def run(flags_obj, datasets_override=None, strategy_override=None):
+  ...
+
+  profile_wrappers_on()
+
+  mnist = tfds.builder('mnist', data_dir=flags_obj.data_dir)
+  if flags_obj.download:
+    mnist.download_and_prepare()
+
+  mnist_train, mnist_test = datasets_override or mnist.as_dataset(
+      split=['train', 'test'],
+      decoders={'image': decode_image()},  # pylint: disable=no-value-for-parameter
+      as_supervised=True)
+  train_input_dataset = mnist_train.cache().repeat().shuffle(
+      buffer_size=50000).batch(flags_obj.batch_size)
+  eval_input_dataset = mnist_test.cache().repeat().batch(flags_obj.batch_size)
+
+  profile_wrappers_off()
+
+  ...
+```
+
+Finally, run the model (can be without any training epoch -- just ensure that the dataset loading part is executed):
+
+```bash
+python3 mnist_main.py \
+    --model_dir=mnist_model/ \
+    --data_dir=mnist_data/ \
+    --train_epochs=0 \
+    --distribution_strategy=one_device \
+    --num_gpus=0 \
+    [--download]  // do this for the first run to download data
+```
 
 
 <div align="center">
