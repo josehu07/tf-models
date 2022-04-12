@@ -11,14 +11,14 @@ ln -s ../../../waistband/profile/profile_wrappers.py profile_wrappers.py
 To enable dataset size profiling, add the following import after all other imports:
 
 ```python
-// mnist_main.py
+# mnist_main.py
 from profile_wrappers import *
 ```
 
 Then, wrap around the dataset loading code snippet with the following two functions:
 
 ```python
-// mnist_main.py
+# mnist_main.py
 def run(flags_obj, datasets_override=None, strategy_override=None):
   ...
 
@@ -50,7 +50,7 @@ python3 mnist_main.py \
     --train_epochs=0 \
     --distribution_strategy=one_device \
     --num_gpus=0 \
-    [--download]  // do this for the first run to download data
+    [--download]  # do this for the first run to download data
 ```
 
 

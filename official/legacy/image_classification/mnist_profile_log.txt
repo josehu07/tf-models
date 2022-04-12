@@ -1,0 +1,248 @@
+I0411 21:27:25.310768 139737704212288 dataset_info.py:439] Load dataset info from mnist_data/mnist/3.0.1
+I0411 21:27:25.313464 139737704212288 dataset_info.py:492] Field info.citation from disk and from code do not match. Keeping the one from code.
+I0411 21:27:25.313625 139737704212288 dataset_info.py:492] Field info.splits from disk and from code do not match. Keeping the one from code.
+I0411 21:27:25.313704 139737704212288 dataset_info.py:492] Field info.supervised_keys from disk and from code do not match. Keeping the one from code.
+I0411 21:27:25.313775 139737704212288 dataset_info.py:492] Field info.module_name from disk and from code do not match. Keeping the one from code.
+I0411 21:27:25.313925 139737704212288 dataset_builder.py:369] Reusing dataset mnist (mnist_data/mnist/3.0.1)
+I0411 21:27:25.314029 139737704212288 logging_logger.py:44] Constructing tf.data.Dataset mnist for split ['train', 'test'], from mnist_data/mnist/3.0.1
+
+|P| TRANSFORMATION: @staticmethod from_tensor_slices(_Instruction(filepath=['mnist_data/mnist/3.0.1/mnist-train.tfrecord-00000-of-00001'], filename=['mnist-train.tfrecord-00000-of-00001'], skip=array([0]), take=array([-1])))
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/tfrecords_reader.py
+|P|   LINE: 175
+|P|   CODE: ['  instruction_ds = tf.data.Dataset.from_tensor_slices(tensor_inputs)\n']
+|P| DATASET INPUTS: None
+|P| DATASET OUTPUT: 0x7f16c07244f0
+|P|  Cardinality: 1
+|P|  ElemSpec: _Instruction(filepath=TensorSpec(shape=(), dtype=tf.string, name=None), filename=TensorSpec(shape=(), dtype=tf.string, name=None), skip=TensorSpec(shape=(), dtype=tf.int64, name=None), take=TensorSpec(shape=(), dtype=tf.int64, name=None))
+|P|  OutputSize: 109
+
+|P| TRANSFORMATION: .interleave(functools.partial(<function _get_dataset_from_filename at 0x7f16c34c5550>, do_skip=False, do_take=False, file_format=<FileFormat.TFRECORD: 'tfrecord'>, add_tfds_id=False), cycle_length=16, block_length=16, num_parallel_calls=-1, deterministic=None, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/tfrecords_reader.py
+|P|   LINE: 204
+|P|   CODE: ['  ds = instruction_ds.interleave(\n']
+|P| DATASET INPUTS: 0x7f16c07244f0
+|P| DATASET OUTPUT: 0x7f16c0724af0
+|P|  Cardinality: 60000
+|P|  ElemSpec: TensorSpec(shape=(), dtype=tf.string, name=None)
+|P|  OutputSize: 18872042
+
+|P| TRANSFORMATION: .apply(<function assert_cardinality.<locals>._apply_fn at 0x7f16c06cfca0>)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/tfrecords_reader.py
+|P|   LINE: 226
+|P|   CODE: ['    ds = ds.apply(tf.data.experimental.assert_cardinality(cardinality))\n']
+|P| DATASET INPUTS: 0x7f16c0724af0
+|P| DATASET OUTPUT: 0x7f16c0646f40
+|P|  Cardinality: 60000
+|P|  ElemSpec: TensorSpec(shape=(), dtype=tf.string, name=None)
+|P|  OutputSize: 18872042
+
+|P| TRANSFORMATION: .with_options(<tensorflow.python.data.ops.options.Options object at 0x7f16c27e2e20>, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/tfrecords_reader.py
+|P|   LINE: 228
+|P|   CODE: ['  ds = ds.with_options(read_config.options)  # Additional users options\n']
+|P| DATASET INPUTS: 0x7f16c0646f40
+|P| DATASET OUTPUT: 0x7f16c05dc640
+|P|  Cardinality: 60000
+|P|  ElemSpec: TensorSpec(shape=(), dtype=tf.string, name=None)
+|P|  OutputSize: 18872042
+
+|P| TRANSFORMATION: .map(<function Reader.read_files.<locals>.parse_and_decode at 0x7f16c06cfaf0>, num_parallel_calls=-1, deterministic=None, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/tfrecords_reader.py
+|P|   LINE: 402
+|P|   CODE: ['    ds = ds.map(\n']
+|P| DATASET INPUTS: 0x7f16c05dc640
+|P| DATASET OUTPUT: 0x7f16c0724fd0
+|P|  Cardinality: 60000
+|P|  ElemSpec: {'image': TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), 'label': TensorSpec(shape=(), dtype=tf.int64, name=None)}
+|P|  OutputSize: 188640000
+
+|P| TRANSFORMATION: .cache(filename=, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/dataset_builder.py
+|P|   LINE: 613
+|P|   CODE: ['      ds = ds.cache()\n']
+|P| DATASET INPUTS: 0x7f16c0724fd0
+|P| DATASET OUTPUT: 0x7f16c2810760
+|P|  Cardinality: 60000
+|P|  ElemSpec: {'image': TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), 'label': TensorSpec(shape=(), dtype=tf.int64, name=None)}
+|P|  OutputSize: 188640000
+
+|P| TRANSFORMATION: .map(<function DatasetBuilder._build_single_dataset.<locals>.lookup_nest at 0x7f16c06f5dc0>, num_parallel_calls=None, deterministic=None, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/dataset_builder.py
+|P|   LINE: 640
+|P|   CODE: ['      ds = ds.map(lookup_nest)\n']
+|P| DATASET INPUTS: 0x7f16c2810760
+|P| DATASET OUTPUT: 0x7f16c2810970
+|P|  Cardinality: 60000
+|P|  ElemSpec: (TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), TensorSpec(shape=(), dtype=tf.int64, name=None))
+|P|  OutputSize: 188640000
+
+|P| TRANSFORMATION: .prefetch(-1, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/dataset_builder.py
+|P|   LINE: 644
+|P|   CODE: ['      ds = ds.prefetch(tf.data.experimental.AUTOTUNE)\n']
+|P| DATASET INPUTS: 0x7f16c2810970
+|P| DATASET OUTPUT: 0x7f16c0629610
+|P|  Cardinality: 60000
+|P|  ElemSpec: (TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), TensorSpec(shape=(), dtype=tf.int64, name=None))
+|P|  OutputSize: 188640000
+
+|P| TRANSFORMATION: @staticmethod from_tensor_slices(_Instruction(filepath=['mnist_data/mnist/3.0.1/mnist-test.tfrecord-00000-of-00001'], filename=['mnist-test.tfrecord-00000-of-00001'], skip=array([0]), take=array([-1])))
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/tfrecords_reader.py
+|P|   LINE: 175
+|P|   CODE: ['  instruction_ds = tf.data.Dataset.from_tensor_slices(tensor_inputs)\n']
+|P| DATASET INPUTS: None
+|P| DATASET OUTPUT: 0x7f16c0614340
+|P|  Cardinality: 1
+|P|  ElemSpec: _Instruction(filepath=TensorSpec(shape=(), dtype=tf.string, name=None), filename=TensorSpec(shape=(), dtype=tf.string, name=None), skip=TensorSpec(shape=(), dtype=tf.int64, name=None), take=TensorSpec(shape=(), dtype=tf.int64, name=None))
+|P|  OutputSize: 107
+
+|P| TRANSFORMATION: .interleave(functools.partial(<function _get_dataset_from_filename at 0x7f16c34c5550>, do_skip=False, do_take=False, file_format=<FileFormat.TFRECORD: 'tfrecord'>, add_tfds_id=False), cycle_length=16, block_length=16, num_parallel_calls=-1, deterministic=None, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/tfrecords_reader.py
+|P|   LINE: 204
+|P|   CODE: ['  ds = instruction_ds.interleave(\n']
+|P| DATASET INPUTS: 0x7f16c0614340
+|P| DATASET OUTPUT: 0x7f16c05522b0
+|P|  Cardinality: 10000
+|P|  ElemSpec: TensorSpec(shape=(), dtype=tf.string, name=None)
+|P|  OutputSize: 3150056
+
+|P| TRANSFORMATION: .apply(<function assert_cardinality.<locals>._apply_fn at 0x7f16c05aeca0>)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/tfrecords_reader.py
+|P|   LINE: 226
+|P|   CODE: ['    ds = ds.apply(tf.data.experimental.assert_cardinality(cardinality))\n']
+|P| DATASET INPUTS: 0x7f16c05522b0
+|P| DATASET OUTPUT: 0x7f16c05531f0
+|P|  Cardinality: 10000
+|P|  ElemSpec: TensorSpec(shape=(), dtype=tf.string, name=None)
+|P|  OutputSize: 3150056
+
+|P| TRANSFORMATION: .with_options(<tensorflow.python.data.ops.options.Options object at 0x7f16c27e2e20>, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/tfrecords_reader.py
+|P|   LINE: 228
+|P|   CODE: ['  ds = ds.with_options(read_config.options)  # Additional users options\n']
+|P| DATASET INPUTS: 0x7f16c05531f0
+|P| DATASET OUTPUT: 0x7f16c0553ee0
+|P|  Cardinality: 10000
+|P|  ElemSpec: TensorSpec(shape=(), dtype=tf.string, name=None)
+|P|  OutputSize: 3150056
+
+|P| TRANSFORMATION: .map(<function Reader.read_files.<locals>.parse_and_decode at 0x7f16c05ae310>, num_parallel_calls=-1, deterministic=None, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/tfrecords_reader.py
+|P|   LINE: 402
+|P|   CODE: ['    ds = ds.map(\n']
+|P| DATASET INPUTS: 0x7f16c0553ee0
+|P| DATASET OUTPUT: 0x7f16c057bfa0
+|P|  Cardinality: 10000
+|P|  ElemSpec: {'image': TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), 'label': TensorSpec(shape=(), dtype=tf.int64, name=None)}
+|P|  OutputSize: 31440000
+
+|P| TRANSFORMATION: .cache(filename=, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/dataset_builder.py
+|P|   LINE: 613
+|P|   CODE: ['      ds = ds.cache()\n']
+|P| DATASET INPUTS: 0x7f16c057bfa0
+|P| DATASET OUTPUT: 0x7f16c0602fd0
+|P|  Cardinality: 10000
+|P|  ElemSpec: {'image': TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), 'label': TensorSpec(shape=(), dtype=tf.int64, name=None)}
+|P|  OutputSize: 31440000
+
+|P| TRANSFORMATION: .map(<function DatasetBuilder._build_single_dataset.<locals>.lookup_nest at 0x7f16c05aed30>, num_parallel_calls=None, deterministic=None, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/dataset_builder.py
+|P|   LINE: 640
+|P|   CODE: ['      ds = ds.map(lookup_nest)\n']
+|P| DATASET INPUTS: 0x7f16c0602fd0
+|P| DATASET OUTPUT: 0x7f16c0552430
+|P|  Cardinality: 10000
+|P|  ElemSpec: (TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), TensorSpec(shape=(), dtype=tf.int64, name=None))
+|P|  OutputSize: 31440000
+
+|P| TRANSFORMATION: .prefetch(-1, name=None)
+|P|   FILE: /users/josehu/.local/lib/python3.8/site-packages/tensorflow_datasets/core/dataset_builder.py
+|P|   LINE: 644
+|P|   CODE: ['      ds = ds.prefetch(tf.data.experimental.AUTOTUNE)\n']
+|P| DATASET INPUTS: 0x7f16c0552430
+|P| DATASET OUTPUT: 0x7f16c0553fa0
+|P|  Cardinality: 10000
+|P|  ElemSpec: (TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), TensorSpec(shape=(), dtype=tf.int64, name=None))
+|P|  OutputSize: 31440000
+
+|P| TRANSFORMATION: .cache(filename=, name=None)
+|P|   FILE: mnist_main.py
+|P|   LINE: 106
+|P|   CODE: ['  train_input_dataset = mnist_train.cache().repeat().shuffle(\n']
+|P| DATASET INPUTS: 0x7f16c0629610
+|P| DATASET OUTPUT: 0x7f16c065f820
+|P|  Cardinality: 60000
+|P|  ElemSpec: (TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), TensorSpec(shape=(), dtype=tf.int64, name=None))
+|P|  OutputSize: 188640000
+
+|P| TRANSFORMATION: .repeat(count=None, name=None)
+|P|   FILE: mnist_main.py
+|P|   LINE: 106
+|P|   CODE: ['  train_input_dataset = mnist_train.cache().repeat().shuffle(\n']
+|P| forced count=1
+|P| DATASET INPUTS: 0x7f16c065f820
+|P| DATASET OUTPUT: 0x7f16ee191dc0
+|P|  Cardinality: 60000
+|P|  ElemSpec: (TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), TensorSpec(shape=(), dtype=tf.int64, name=None))
+|P|  OutputSize: 188640000
+
+|P| TRANSFORMATION: .shuffle(50000, seed=None, reshuffle_each_iteration=None, name=None)
+|P|   FILE: mnist_main.py
+|P|   LINE: 106
+|P|   CODE: ['  train_input_dataset = mnist_train.cache().repeat().shuffle(\n']
+|P| DATASET INPUTS: 0x7f16ee191dc0
+|P| DATASET OUTPUT: 0x7f16c27e2e20
+|P|  Cardinality: 60000
+|P|  ElemSpec: (TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), TensorSpec(shape=(), dtype=tf.int64, name=None))
+|P|  OutputSize: 188640000
+
+|P| TRANSFORMATION: .batch(1024, drop_remainder=False, num_parallel_calls=None, deterministic=None, name=None)
+|P|   FILE: mnist_main.py
+|P|   LINE: 106
+|P|   CODE: ['  train_input_dataset = mnist_train.cache().repeat().shuffle(\n']
+|P| forced drop_remainder=True
+|P| DATASET INPUTS: 0x7f16c27e2e20
+|P| DATASET OUTPUT: 0x7f16c0557850
+|P|  Cardinality: 58
+|P|  ElemSpec: (TensorSpec(shape=(1024, 28, 28, 1), dtype=tf.float32, name=None), TensorSpec(shape=(1024,), dtype=tf.int64, name=None))
+|P|  OutputSize: 186728448
+
+|P| TRANSFORMATION: .cache(filename=, name=None)
+|P|   FILE: mnist_main.py
+|P|   LINE: 108
+|P|   CODE: ['  eval_input_dataset = mnist_test.cache().repeat().batch(flags_obj.batch_size)\n']
+|P| DATASET INPUTS: 0x7f16c0553fa0
+|P| DATASET OUTPUT: 0x7f16c0573370
+|P|  Cardinality: 10000
+|P|  ElemSpec: (TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), TensorSpec(shape=(), dtype=tf.int64, name=None))
+|P|  OutputSize: 31440000
+
+|P| TRANSFORMATION: .repeat(count=None, name=None)
+|P|   FILE: mnist_main.py
+|P|   LINE: 108
+|P|   CODE: ['  eval_input_dataset = mnist_test.cache().repeat().batch(flags_obj.batch_size)\n']
+|P| forced count=1
+|P| DATASET INPUTS: 0x7f16c0573370
+|P| DATASET OUTPUT: 0x7f16c0573550
+|P|  Cardinality: 10000
+|P|  ElemSpec: (TensorSpec(shape=(28, 28, 1), dtype=tf.float32, name=None), TensorSpec(shape=(), dtype=tf.int64, name=None))
+|P|  OutputSize: 31440000
+
+|P| TRANSFORMATION: .batch(1024, drop_remainder=False, num_parallel_calls=None, deterministic=None, name=None)
+|P|   FILE: mnist_main.py
+|P|   LINE: 108
+|P|   CODE: ['  eval_input_dataset = mnist_test.cache().repeat().batch(flags_obj.batch_size)\n']
+|P| forced drop_remainder=True
+|P| DATASET INPUTS: 0x7f16c0573550
+|P| DATASET OUTPUT: 0x7f16c0565b80
+|P|  Cardinality: 9
+|P|  ElemSpec: (TensorSpec(shape=(1024, 28, 28, 1), dtype=tf.float32, name=None), TensorSpec(shape=(1024,), dtype=tf.int64, name=None))
+|P|  OutputSize: 28975104
+2022-04-11 21:41:15.774091: W tensorflow/core/framework/dataset.cc:768] Input of GeneratorDatasetOp::Dataset will not be optimized because the dataset does not implement the AsGraphDefInternal() method needed to apply optimizations.
+2022-04-11 21:41:16.230629: W tensorflow/python/util/util.cc:368] Sets are not currently considered sequences, but this may change in the future, so consider avoiding using them.
+INFO:tensorflow:Assets written to: mnist_model/saved_model/assets
+I0411 21:41:16.656481 139737704212288 builder_impl.py:779] Assets written to: mnist_model/saved_model/assets
+9/9 - 1s - loss: 2.3027 - sparse_categorical_accuracy: 0.1404 - 1s/epoch - 164ms/step
+I0411 21:41:18.214996 139737704212288 mnist_main.py:176] Run stats:
+{'accuracy_top_1': 0.1404079794883728, 'eval_loss': 2.302657127380371}
