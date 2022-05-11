@@ -34,6 +34,9 @@ from official.utils import hyperparams_flags
 from official.utils.flags import core as flags_core
 from official.utils.misc import keras_utils
 
+from profile_wrappers import *
+
+
 hyperparams_flags.initialize_common_flags()
 flags_core.define_log_steps()
 

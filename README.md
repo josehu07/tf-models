@@ -41,9 +41,14 @@ def run(flags_obj, datasets_override=None, strategy_override=None):
   ...
 ```
 
-Finally, run the model (can be without any training epoch -- just ensure that the dataset loading part is executed):
+Finally, run the model (can be without any training epoch -- just ensure that the dataset loading part is executed).
+
+### MNIST
+
+Soft link to wrappers has been added.
 
 ```bash
+cd official/legacy/image_classification
 python3 mnist_main.py \
     --model_dir=mnist_model/ \
     --data_dir=mnist_data/ \
@@ -52,6 +57,22 @@ python3 mnist_main.py \
     --num_gpus=0 \
     [--download]  # do this for the first run to download data
 ```
+
+Transformation program appears in `official/legacy/image_classification/mnist_main.py`.
+
+### RetinaNet on TinyCOCO
+
+Soft link to wrappers has been added.
+
+```bash
+cd official/legacy/detection
+./run-retinanet.sh train
+./run-retinanet.sh eval     # this hangs at the end, just kill
+```
+
+The TinyCOCO dataset in `tfrecord` format has been included in-place (since the preparation steps are too verbose).
+
+Transformation program appears in `official/legacy/detection/dataloader/input_reader.py`.
 
 
 <div align="center">

@@ -23,6 +23,8 @@ from official.legacy.detection.dataloader import factory
 from official.legacy.detection.dataloader import mode_keys as ModeKeys
 from official.modeling.hyperparams import params_dict
 
+from profile_wrappers import *
+
 
 class InputFn(object):
   """Input function that creates dataset from files."""
@@ -74,6 +76,8 @@ class InputFn(object):
     Returns:
       tf.data.Dataset object.
     """
+    profile_wrappers_on()
+
     if not batch_size:
       batch_size = self._batch_size
     assert batch_size is not None
@@ -102,4 +106,7 @@ class InputFn(object):
         self._parser_fn, num_parallel_calls=tf.data.experimental.AUTOTUNE)
     dataset = dataset.batch(batch_size, drop_remainder=True)
     dataset = dataset.prefetch(tf.data.experimental.AUTOTUNE)
+
+    profile_wrappers_off()
+
     return dataset
