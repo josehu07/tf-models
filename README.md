@@ -74,6 +74,40 @@ The TinyCOCO dataset in `tfrecord` format has been included in-place (since the 
 
 Transformation program appears in `official/legacy/detection/dataloader/input_reader.py`.
 
+### COCO to TFRecord
+
+Use the script under `official/legacy/detection/dataloader/create_coco_tfrecord/` to convert COCO images + annotations to tfrecord. Credit: [https://github.com/MetaPeak/tensorflow_object_detection_create_coco_tfrecord](https://github.com/MetaPeak/tensorflow_object_detection_create_coco_tfrecord).
+
+Prepare a folder structure as follows (the `official/legacy/detection/retinanet_data/` is a valid `data_dir/`):
+
+```text
++ data_dir/
+  + train2014
+  + val2014
+  + annotations
+      - instances_train2014.json
+      - instances_val2014.json
+```
+
+, then do:
+
+```bash
+python3 create_coco_tf_record.py \
+    --data_dir=path/to/retinanet_data/ \
+    --set=train \   # or val
+    --output_filepath=path/to/retinanet_data/train.tfrecord   # or val.tfrecord
+```
+
+The script requires things under `create_coco_tfrecord/pycocotools/` be compiled from the official COCO-API. The one included in place is compiled on x86_64 Ubuntu 20.04 with Python 3.8. If that doesn't work, remove the folder and recompile from official COCO-API:
+
+```bash
+rm -rf pycocotools
+git clone https://github.com/cocodataset/cocoapi
+cd  cocoapi/PythonAPI/
+make
+cp -r pycocotools path/to/create_coco_tfrecord/
+```
+
 
 <div align="center">
   <img src="https://storage.googleapis.com/tf_model_garden/tf_model_garden_logo.png">
