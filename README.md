@@ -76,14 +76,14 @@ Transformation program appears in `official/legacy/detection/dataloader/input_re
 
 ### COCO to TFRecord
 
-Use the script under `official/legacy/detection/dataloader/create_coco_tfrecord/` to convert COCO images + annotations to tfrecord. Credit: [https://github.com/MetaPeak/tensorflow_object_detection_create_coco_tfrecord](https://github.com/MetaPeak/tensorflow_object_detection_create_coco_tfrecord).
+Use the script under `official/legacy/detection/create_coco_tfrecord/` to convert COCO images + annotations to tfrecord. Credit: [https://github.com/MetaPeak/tensorflow_object_detection_create_coco_tfrecord](https://github.com/MetaPeak/tensorflow_object_detection_create_coco_tfrecord).
 
 Prepare a folder structure as follows (the `official/legacy/detection/retinanet_data/` is a valid `data_dir/`):
 
 ```text
 + data_dir/
-  + train2014
-  + val2014
+  + train2017
+  + val2017
   + annotations
       - instances_train2014.json
       - instances_val2014.json
